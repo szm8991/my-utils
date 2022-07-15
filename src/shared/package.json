@@ -1,0 +1,20 @@
+{
+  "name": "@utils/shared",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "vitest",
+    "build": "unbuild",
+    "lint": "eslint src --fix",
+    "release": "npx bumpp --commit --push --tag"
+  }
+}
