@@ -1,3 +1,3 @@
-# pkg-name
+# my-utils
 
-- fork from [Anthony Fu](https://github.com/antfu/starter-ts)
+some js util functions
