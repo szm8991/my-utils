@@ -2,20 +2,16 @@
 category: Utilities
 ---
 
-# useBase64
+# deepClone
 
-Reactive base64 transforming. Supports plain text, buffer, files, canvas, objects, maps, sets and images.
+to deepClone a value
 
 ## Usage
 
 ```ts
-import { Ref, ref } from 'vue'
-import { useBase64 } from '@vueuse/core'
+import { deepClone } from '@szm/utils'
 
-const text = ref('')
-
-const { base64 } = useBase64(text)
+const o1 = { a: 1, b: { x: 2 } }
+const o2 = deepClone(o1)
+// do something with o2
 ```
-
-If you use object, array, map or set you can provide serializer in options. Otherwise, your data will be serialized by default serializer.
-Objects and arrays will be transformed in string by JSON.stringify. Map and set will be transformed in object and array respectively before stringify.
