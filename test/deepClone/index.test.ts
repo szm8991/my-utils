@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { deepClone, deepCloneWithRecursion, deepCloneWithStack } from '../../src'
+import { deepClone, register } from '../../src'
 
 describe('should', () => {
   it('clone a object', () => {
@@ -60,5 +60,49 @@ describe('should', () => {
     Object.preventExtensions(o1)
     const o2: any = deepClone(o1)
     expect(Object.isExtensible(o2)).toBe(false)
+  })
+  it('clone a Array', () => {
+    const o1: any = []
+    o1.length = 3
+    const o2: any = deepClone(o1)
+    expect(JSON.stringify(o1)).toEqual(JSON.stringify(o2))
+    expect(o2).not.toBe(o1)
+  })
+  it('clone a String Object', () => {
+    const o1: any = new String('abc')
+    const o2: any = deepClone(o1)
+    expect(JSON.stringify(o1)).toEqual(JSON.stringify(o2))
+    expect(o2).not.toBe(o1)
+    expect(o2.valueOf()).toBe('abc')
+  })
+  it('clone a Function', () => {
+    const o1: any = function (a, b) {
+      return a + b
+    }
+    const o2: any = deepClone(o1)
+    expect(o2).not.toBe(o1)
+    expect(o2(1, 3)).toBe(4)
+  })
+  it('clone a Date', () => {
+    const o1: any = new Date()
+    const o2: any = deepClone(o1)
+    expect(o2).not.toBe(o1)
+    expect(o2.getTime()).toBe(o1.getTime())
+  })
+  it('clone a RegExp', () => {
+    const o1: any = /^123$/g
+    const o2: any = deepClone(o1)
+    expect(o2).not.toBe(o1)
+    expect(o2.toString()).toBe(o1.toString())
+  })
+  it('register a customer class', () => {
+    register(
+      (target, type, rawType, prototype) => rawType === 'Symbol',
+      target => Object(target.valueOf()),
+    )
+    const o1: any = Object(Symbol('abc'))
+    const o2: any = deepClone(o1)
+    expect(o2).not.toBe(o1)
+    expect(o2.constructor).toBe(Symbol)
   })
 })
